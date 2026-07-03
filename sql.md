@@ -229,6 +229,8 @@ STUDENT TABLE
 
 
 
+\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*
+
 
 
 \# SQL Statements
@@ -245,7 +247,11 @@ STUDENT TABLE
 
 
 
-=> ARGUMENTS PASSING WITH PROJECTION :-> \* / \[DISTINCT] COLNAME / EXPRESSION \[ALIAS]
+
+
+\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*
+
+=> ARGUMENTS PASSING WITH SELECT CLAUSE :-> \* / \[DISTINCT] COLNAME / EXPRESSION \[ALIAS]
 
 
 
@@ -253,75 +259,63 @@ STUDENT TABLE
 
 
 
+
+
+\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*
+
+
+
 => DISTINCT :-> USED TO AVOID DUPLICATE VALUES .
 
+\# DISTINCT COLUMN NAME
 
+=> HAMESHA EK DISTINCT USE KARTE HAI .
 
-=> ALIAS :
-
-\-> It is an alternative name given to a column or a expression.
-
-\-> It is temporary in nature.
-
-\-> We can use Alias with or without 'as' keyword.
+=> DISTINCT GIVE PREFERENCE TO THE FIRST ARGUMENT(PARAMETER).
 
 
 
-\# NVL :-> NULL VALUE LOGIC :-> USED TO REPLACE THE NULL VALUES .
+====> CHARACTERISTICS OF DISTINCT
 
-&#x20; Syntax :- >NVL (column name , value)
+1.=> Distinct is always pass as a first argument inside select clause.
 
-
-
-\#### We cannot pass column name and expression alias with asterisk(\*) .
+2.=> If we pass Multiple columns inside distinct it will check combination of values. If combination is matching it will consider as duplicate      records but combination is not matching then it's a unique record.
 
 
+
+\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*
+
+
+
+\# EXPRESSION AND ALIAS.
+
+
+
+=> ANY MATHEMATICAL OPERATION WHICH RETURN A RESULT IS CALLED EXPRESSION.
+
+&#x20; EX :-> 5 + 5 = 10
+
+&#x20;        5 \* 5 = 25
+
+&#x20;        5/5  = 1
+
+&#x20;       SAL + 200
+
+
+
+\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*
 
 WAY OF EXECUTION OF SQL QUERY :-> BOTTOM TO TOP
 
 
 
-\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*
-
-\--> SELECTION :->
-
-=> It is mainly used to fetch (retrieve) the data by selecting both rows and columns.
 
 
+\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*
 
-\# SYNTAX FOR SELECTION :-> SELECT COLNAME/EXPRESSION FROM TABLENAME WHERE <FILTER CONDITION> ;
-
-
-
-\# ORDER OF EXECUTION :-> FROM ---> WHERE ---> SELECT
-
-&#x20; 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-\------------------------------------------------------------------------------------------------------------------------------------------------------------
+\--> SELECTION => It is mainly used to fetch (retrieve) the data by selecting both rows and columns.
 
 \--> JOINS => It is mainly used to fetch the data from Multiple Tables simultaneously(ek-saath).
-
-
 
 
 
@@ -349,11 +343,7 @@ WAY OF EXECUTION OF SQL QUERY :-> BOTTOM TO TOP
 
 
 
-5.DCL :-> Data Control Language =>
-
-&#x20;->  Used to control the flow of the Program.
-
-It controlled access(Permissions) of data.
+5.DCL :-> Data Control Language => It controlled access(Permissions) of data.
 
 => Grant , Revoke
 
@@ -368,4 +358,8 @@ It controlled access(Permissions) of data.
 \# questions :->
 
 1. WAQTD NAME OF ALL THE EMPOLOYEE.
+
+
+
+\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*
 

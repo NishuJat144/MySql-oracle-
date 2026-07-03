@@ -1,0 +1,172 @@
+SQL> -- 1. WAQTD NUMBER OF EMPLOYEES WORKING IN EACH DEPARTMENT EXCEPT PRESIDENT
+SQL> SELECT COUNT(*)
+  2  FROM EMP
+  3  WHERE JOB!='PRESIDENT' ;
+
+  COUNT(*)                                                                                                                                                                                              
+----------                                                                                                                                                                                              
+        13                                                                                                                                                                                              
+
+SQL> -- 2. WAQTD TOTAL SALARY NEEDED TO PAY ALL THE EMPLOYEED IN EACH JOB .
+SQL> SELECT SUM(SAL)
+  2  FROM EMP
+  3  GROUP BY JOB;
+
+  SUM(SAL)                                                                                                                                                                                              
+----------                                                                                                                                                                                              
+      4150                                                                                                                                                                                              
+      5600                                                                                                                                                                                              
+      5000                                                                                                                                                                                              
+      8275                                                                                                                                                                                              
+      6000                                                                                                                                                                                              
+
+SQL> -- 3. WAQTD NUMBER OF EMPLOYEES WORKING AS MANAGER IN EACH DEPARTMENT.
+SQL> SELECT COUNT(*)
+  2  FROM EMP
+  3  WHERE JOB='MANAGER'
+  4  GROUP BY DEPTNO ;
+
+  COUNT(*)                                                                                                                                                                                              
+----------                                                                                                                                                                                              
+         1                                                                                                                                                                                              
+         1                                                                                                                                                                                              
+         1                                                                                                                                                                                              
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT COUNT(*) , DEPTNO
+  2  FROM EMP
+  3  WHERE JOB='MANAGER'
+  4* GROUP BY DEPTNO 
+SQL> /
+
+  COUNT(*)     DEPTNO                                                                                                                                                                                   
+---------- ----------                                                                                                                                                                                   
+         1         30                                                                                                                                                                                   
+         1         20                                                                                                                                                                                   
+         1         10                                                                                                                                                                                   
+
+SQL> -- 4. WAQTD AVG SALARY NEEDED TO PAY ALL THE EMPLOYEES IN EACH DEPARTMENT EXCLUDING THE EMPLOYEES OF DEPTNO 20 .
+SQL> SELECT AVG(SAL)
+  2  FROM EMP
+  3  WHERE DEPTNO!=20
+  4  GROUP BY DEPTNO ;
+
+  AVG(SAL)                                                                                                                                                                                              
+----------                                                                                                                                                                                              
+1566.66667                                                                                                                                                                                              
+2916.66667                                                                                                                                                                                              
+
+SQL> -- 5. WAQTD NUMBER OF EMPLOYEES HAVING CHARACTER 'A' IN THEIR NAMES IN EACH JOB
+SQL> SELECT COUNT(*)
+  2  FROM EMP
+  3  WHERE ENAME LIKE '%A%'
+  4  GROUP BY JOB ;
+
+  COUNT(*)                                                                                                                                                                                              
+----------                                                                                                                                                                                              
+         3                                                                                                                                                                                              
+         2                                                                                                                                                                                              
+         2                                                                                                                                                                                              
+
+SQL> -- 6. WAQTD NUMBER OF EMPLOYEES AND AVG SALARY NEEDED TO PAY THE EMPLOYEES WHO SALARY GREATER THAN 2000 IN EACH DEPT
+SQL> SELECT COUNT(EMP)
+  2  , AVG(SAL)
+  3  FROM EMP
+  4  WHERE SAL>2000
+  5  GROUP BY DEPTNO;
+SELECT COUNT(EMP)
+             *
+ERROR at line 1:
+ORA-00904: "EMP": invalid identifier 
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT COUNT(*), AVG(SAL)
+  2  FROM EMP
+  3  WHERE SAL>2000
+  4* GROUP BY DEPTNO
+SQL> /
+
+  COUNT(*)   AVG(SAL)                                                                                                                                                                                   
+---------- ----------                                                                                                                                                                                   
+         1       2850                                                                                                                                                                                   
+         3 2991.66667                                                                                                                                                                                   
+         2       3725                                                                                                                                                                                   
+
+SQL> -- 7. WAQTD TOTAL SALARY NEEDED TO PAY AND NUMBER OF SALESMAN IN EACH DEPT .
+SQL> SELECT SUM(SAL) , COUNT(*)
+  2  FROM EMP
+  3  WHERE JOB='SALESMAN'
+  4  GROUP BY DEPTNO;
+
+  SUM(SAL)   COUNT(*)                                                                                                                                                                                   
+---------- ----------                                                                                                                                                                                   
+      5600          4                                                                                                                                                                                   
+
+SQL> -- 8. WAQTD NUMBER OF EMPLOYEES WITH THEIR MAXIMUM SALARIES IN EACH JOB.
+SQL> SELECT COUNT(*) , MAX(SAL)
+  2  FROM EMP
+  3  GROUP BY JOB ;
+
+  COUNT(*)   MAX(SAL)                                                                                                                                                                                   
+---------- ----------                                                                                                                                                                                   
+         4       1300                                                                                                                                                                                   
+         4       1600                                                                                                                                                                                   
+         1       5000                                                                                                                                                                                   
+         3       2975                                                                                                                                                                                   
+         2       3000                                                                                                                                                                                   
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT COUNT(*) , MAX(SAL),JOB
+  2  FROM EMP
+  3* GROUP BY JOB 
+SQL> /
+
+  COUNT(*)   MAX(SAL) JOB                                                                                                                                                                               
+---------- ---------- ---------                                                                                                                                                                         
+         4       1300 CLERK                                                                                                                                                                             
+         4       1600 SALESMAN                                                                                                                                                                          
+         1       5000 PRESIDENT                                                                                                                                                                         
+         3       2975 MANAGER                                                                                                                                                                           
+         2       3000 ANALYST                                                                                                                                                                           
+
+SQL> -- 9. WAQTD MAXIMUM SALARIES GIVEN TO AN EMPLOYEE WORKING IN EACH DEPT .
+SQL> SELECT MAX(SAL)
+  2  FROM EMP
+  3  GROUP BY DEPTNO ;
+
+  MAX(SAL)                                                                                                                                                                                              
+----------                                                                                                                                                                                              
+      2850                                                                                                                                                                                              
+      3000                                                                                                                                                                                              
+      5000                                                                                                                                                                                              
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT MAX(SAL) ,DEPTNO
+  2  FROM EMP
+  3* GROUP BY DEPTNO 
+SQL> /
+
+  MAX(SAL)     DEPTNO                                                                                                                                                                                   
+---------- ----------                                                                                                                                                                                   
+      2850         30                                                                                                                                                                                   
+      3000         20                                                                                                                                                                                   
+      5000         10                                                                                                                                                                                   
+
+SQL> -- 10. WAQTD NUMBER OF TIMES THE SALARIES PRESENT IN EMPLOYEE TABLE
+SQL> SELECT COUNT(SAL)
+  2  FROM EMP ;
+
+COUNT(SAL)                                                                                                                                                                                              
+----------                                                                                                                                                                                              
+        14                                                                                                                                                                                              
+
+SQL> spool off
