@@ -1,0 +1,324 @@
+SQL> -- WAQTD DETAILS OF AN EMPLOYEE ARRANGE THE DATA IN ASCENDING ORDER ACCORDING TO THE SALARY
+SQL> SELECT *
+  2  FROM EMP
+  3  ORDER BY SAL ASC;
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO                                                                                                                   
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------                                                                                                                   
+      7369 SMITH      CLERK           7902 17-DEC-80        800                    20                                                                                                                   
+      7900 JAMES      CLERK           7698 03-DEC-81        950                    30                                                                                                                   
+      7876 ADAMS      CLERK           7788 23-MAY-87       1100                    20                                                                                                                   
+      7521 WARD       SALESMAN        7698 22-FEB-81       1250        500         30                                                                                                                   
+      7654 MARTIN     SALESMAN        7698 28-SEP-81       1250       1400         30                                                                                                                   
+      7934 MILLER     CLERK           7782 23-JAN-82       1300                    10                                                                                                                   
+      7844 TURNER     SALESMAN        7698 08-SEP-81       1500          0         30                                                                                                                   
+      7499 ALLEN      SALESMAN        7698 20-FEB-81       1600        300         30                                                                                                                   
+      7782 CLARK      MANAGER         7839 09-JUN-81       2450                    10                                                                                                                   
+      7698 BLAKE      MANAGER         7839 01-MAY-81       2850                    30                                                                                                                   
+      7566 JONES      MANAGER         7839 02-APR-81       2975                    20                                                                                                                   
+      7788 SCOTT      ANALYST         7566 19-APR-87       3000                    20                                                                                                                   
+      7902 FORD       ANALYST         7566 03-DEC-81       3000                    20                                                                                                                   
+      7839 KING       PRESIDENT            17-NOV-81       5000                    10                                                                                                                   
+
+14 rows selected.
+
+SQL> -- WAQTD DETAILS OF AN EMPLOYEE ARRANGE THE DATA IN DESCENDING ORDER ACCORDING TO THE SALARY
+SQL> SELECT *
+  2  FROM EMP
+  3  ORDER BY SAL DESC;
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO                                                                                                                   
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------                                                                                                                   
+      7839 KING       PRESIDENT            17-NOV-81       5000                    10                                                                                                                   
+      7902 FORD       ANALYST         7566 03-DEC-81       3000                    20                                                                                                                   
+      7788 SCOTT      ANALYST         7566 19-APR-87       3000                    20                                                                                                                   
+      7566 JONES      MANAGER         7839 02-APR-81       2975                    20                                                                                                                   
+      7698 BLAKE      MANAGER         7839 01-MAY-81       2850                    30                                                                                                                   
+      7782 CLARK      MANAGER         7839 09-JUN-81       2450                    10                                                                                                                   
+      7499 ALLEN      SALESMAN        7698 20-FEB-81       1600        300         30                                                                                                                   
+      7844 TURNER     SALESMAN        7698 08-SEP-81       1500          0         30                                                                                                                   
+      7934 MILLER     CLERK           7782 23-JAN-82       1300                    10                                                                                                                   
+      7521 WARD       SALESMAN        7698 22-FEB-81       1250        500         30                                                                                                                   
+      7654 MARTIN     SALESMAN        7698 28-SEP-81       1250       1400         30                                                                                                                   
+      7876 ADAMS      CLERK           7788 23-MAY-87       1100                    20                                                                                                                   
+      7900 JAMES      CLERK           7698 03-DEC-81        950                    30                                                                                                                   
+      7369 SMITH      CLERK           7902 17-DEC-80        800                    20                                                                                                                   
+
+14 rows selected.
+
+SQL> -- SUBQUERY--
+SQL> -- WAQTD NAME OF AN EMPLOYEE WHO ARE EARNING MORE THAN 2000
+SQL> SELECT ENAME
+  2  FROM EMP
+  3  WHERE SAL
+  4  > 2000 ;
+
+ENAME                                                                                                                                                                                                   
+----------                                                                                                                                                                                              
+JONES                                                                                                                                                                                                   
+BLAKE                                                                                                                                                                                                   
+CLARK                                                                                                                                                                                                   
+SCOTT                                                                                                                                                                                                   
+KING                                                                                                                                                                                                    
+FORD                                                                                                                                                                                                    
+
+6 rows selected.
+
+SQL> -- WAQTD ENAME WHO ARE EARNING MORE THAN SCOTT .
+SQL> SELECT SAL
+  2  FROM ENAME
+  3  WH
+  4  
+SQL> SELECT SAL
+  2  FROM EMP
+  3  WHERE ENAME='SCOTT' ;
+
+       SAL                                                                                                                                                                                              
+----------                                                                                                                                                                                              
+      3000                                                                                                                                                                                              
+
+SQL> SELECT *
+  2  FROM EMP
+  3  WHERE SAL >3000;
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO                                                                                                                   
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------                                                                                                                   
+      7839 KING       PRESIDENT            17-NOV-81       5000                    10                                                                                                                   
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT ENAME
+  2  FROM EMP
+  3  WHERE SAL > (SELECT SAL
+  4               FROM EMP 
+  5               WHERE ENAME='SCOTT' ;
+  6*              )
+SQL> /
+             WHERE ENAME='SCOTT' ;
+                                 *
+ERROR at line 5:
+ORA-00911: invalid character 
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT ENAME
+  2  FROM EMP
+  3  WHERE SAL > (SELECT SAL
+  4               FROM EMP 
+  5*              WHERE ENAME='SCOTT') 
+  6  /
+
+ENAME                                                                                                                                                                                                   
+----------                                                                                                                                                                                              
+KING                                                                                                                                                                                                    
+
+SQL> -- WAQTD NAME OF EMPLOYEES WHO ARE WORKING IN A SAME JOB AS ALLEN ,
+SQL> SELECT JOB
+  2  FROM EMP
+  3  WHERE ENAME='ALLEN';
+
+JOB                                                                                                                                                                                                     
+---------                                                                                                                                                                                               
+SALESMAN                                                                                                                                                                                                
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT ENAME
+  2  FROM EMP
+  3  WHERE JOB =(SELECT JOB
+  4              FROM EMP
+  5*             WHERE ENAME='ALLEN')
+SQL> /
+
+ENAME                                                                                                                                                                                                   
+----------                                                                                                                                                                                              
+ALLEN                                                                                                                                                                                                   
+WARD                                                                                                                                                                                                    
+MARTIN                                                                                                                                                                                                  
+TURNER                                                                                                                                                                                                  
+
+SQL> -- WAQTD DETAILS OF AN EMPLOYEE WHO ARE WORKING IN SAME DEPT AS SMITH
+SQL> SELECT DEPTNO
+  2  FROM EMP \
+  3  
+SQL> SELECT DEPTNO
+  2  FROM EMP
+  3  WHERE ENAME='SMITH';
+
+    DEPTNO                                                                                                                                                                                              
+----------                                                                                                                                                                                              
+        20                                                                                                                                                                                              
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT *
+  2  FROM EMP
+  3  WHERE DEPTNO=(SELECT DEPTNO
+  4                FROM EMP
+  5*               WHERE ENAME='SMITH')
+SQL> /
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO                                                                                                                   
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------                                                                                                                   
+      7369 SMITH      CLERK           7902 17-DEC-80        800                    20                                                                                                                   
+      7566 JONES      MANAGER         7839 02-APR-81       2975                    20                                                                                                                   
+      7788 SCOTT      ANALYST         7566 19-APR-87       3000                    20                                                                                                                   
+      7876 ADAMS      CLERK           7788 23-MAY-87       1100                    20                                                                                                                   
+      7902 FORD       ANALYST         7566 03-DEC-81       3000                    20                                                                                                                   
+
+SQL> -- WAQTD
+SQL> -- WAQTD DETAILS OF AN EMPLOYEE IF EMPLOYEE IS HIRED BEFORE BLAKE .
+SQL> SELECT HIREDATE
+  2  FROM EMP
+  3  WHERE ENAME='BLAKE' ;
+
+HIREDATE                                                                                                                                                                                                
+---------                                                                                                                                                                                               
+01-MAY-81                                                                                                                                                                                               
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT *
+  2  FROM EMP
+  3  WHERE HIREDATE<(SELECT HIREDATE
+  4                  FROM EMP
+  5*                 WHERE ENAME='BLAKE') 
+SQL> /
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO                                                                                                                   
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------                                                                                                                   
+      7369 SMITH      CLERK           7902 17-DEC-80        800                    20                                                                                                                   
+      7499 ALLEN      SALESMAN        7698 20-FEB-81       1600        300         30                                                                                                                   
+      7521 WARD       SALESMAN        7698 22-FEB-81       1250        500         30                                                                                                                   
+      7566 JONES      MANAGER         7839 02-APR-81       2975                    20                                                                                                                   
+
+SQL> -- WAQTD DNAME OF BLAKE
+SQL> SELECT DEPTNO
+  2  FROM EMP
+  3  WHERE ENAME=
+  4  'BLAKE' ;
+
+    DEPTNO                                                                                                                                                                                              
+----------                                                                                                                                                                                              
+        30                                                                                                                                                                                              
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT DNAME
+  2  FROM DEPT
+  3  WHERE DEPTNO = (SELECT DEPTNO
+  4            FROM EMP
+  5*           WHERE ENAME='BLAKE') 
+SQL> /
+
+DNAME                                                                                                                                                                                                   
+--------------                                                                                                                                                                                          
+SALES                                                                                                                                                                                                   
+
+SQL> --WAQTD NAME OF EMPLOYEES IF EMPLOYEE IS WORKING IN SALES DEPARTMENT .
+SQL> SELECT DEPTNO
+  2  FROM DEPT
+  3  WHERE DNAME='SALES';
+
+    DEPTNO                                                                                                                                                                                              
+----------                                                                                                                                                                                              
+        30                                                                                                                                                                                              
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT ENAME 
+  2  FROM EMP
+  3  WHERE DEPTNO= (SELECT DEPTNO
+  4                 FROM DEPT
+  5*                WHERE DNAME='SALES')
+SQL> /
+
+ENAME                                                                                                                                                                                                   
+----------                                                                                                                                                                                              
+ALLEN                                                                                                                                                                                                   
+WARD                                                                                                                                                                                                    
+MARTIN                                                                                                                                                                                                  
+BLAKE                                                                                                                                                                                                   
+TURNER                                                                                                                                                                                                  
+JAMES                                                                                                                                                                                                   
+
+6 rows selected.
+
+SQL> -- WAQTD DNAME AND LOC OF EMPLOYEE WHO ARE WORKING IN NEWYORK.
+SQL> SELECT DNAME,LOC
+  2  FROM DEPT
+  3  WHERE LOC='NEW YORK';
+
+DNAME          LOC                                                                                                                                                                                      
+-------------- -------------                                                                                                                                                                            
+ACCOUNTING     NEW YORK                                                                                                                                                                                 
+
+SQL> -- WAQTD NAME OF EMPLOYEE IF EMPLOYEE IS WORKING IN NEWYORK
+SQL> SELECT DEPTNO'
+  2  
+SQL> SELECT DEPTNO
+  2  FROM DEPT
+  3  WHERE LOC='NEW YORK';
+
+    DEPTNO                                                                                                                                                                                              
+----------                                                                                                                                                                                              
+        10                                                                                                                                                                                              
+
+SQL> -- WAQTD DNAME AND LOCATION OF JONES ;
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT ENAME
+  2  FROM EMP
+  3  WHERE DEPTNO = (SELECT DEPTNO
+  4                  FROM DEPT
+  5*                 WHERE LOC='NEW YORK')
+SQL> /
+
+ENAME                                                                                                                                                                                                   
+----------                                                                                                                                                                                              
+CLARK                                                                                                                                                                                                   
+KING                                                                                                                                                                                                    
+MILLER                                                                                                                                                                                                  
+
+SQL>   SELECT DNAME,LOC
+  2  FROM DEPT;
+
+DNAME          LOC                                                                                                                                                                                      
+-------------- -------------                                                                                                                                                                            
+ACCOUNTING     NEW YORK                                                                                                                                                                                 
+RESEARCH       DALLAS                                                                                                                                                                                   
+SALES          CHICAGO                                                                                                                                                                                  
+OPERATIONS     BOSTON                                                                                                                                                                                   
+
+SQL> SELECT DEPTNO
+  2  FROM EMP
+  3  WHERE ENAME='JONES';
+
+    DEPTNO                                                                                                                                                                                              
+----------                                                                                                                                                                                              
+        20                                                                                                                                                                                              
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT DNAME,LOC 
+  2  FROM DEPT 
+  3  WHERE DEPTNO=(SELECT DEPTNO
+  4                FROM EMP
+  5*               WHERE ENAME='JONES')
+SQL> /
+
+DNAME          LOC                                                                                                                                                                                      
+-------------- -------------                                                                                                                                                                            
+RESEARCH       DALLAS                                                                                                                                                                                   
+
+SQL> spool off

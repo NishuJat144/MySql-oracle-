@@ -1,0 +1,531 @@
+SQL> -- CREATION OF TABLE
+SQL> CREATE TABLE STUDENT
+  2  (
+  3  SID NUMBER(4) CHECK(SID>0) CHECK(LENGTH(SID)=4),
+  4  SNAME VARCHAR
+  5  (20) NOT NULL ,
+  6  DOB DATE ,
+  7  PHONE_NO NUMBER(10) CHECK(PHONE_NO>0) CHECK(LENGTH(PHONE_NO) = 10),,''
+  8  );
+PHONE_NO NUMBER(10) CHECK(PHONE_NO>0) CHECK(LENGTH(PHONE_NO) = 10),,''
+                                                                   *
+ERROR at line 7:
+ORA-00904: : invalid identifier 
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  CREATE TABLE STUDENT
+  2  (
+  3  SID NUMBER(4) CHECK(SID>0) CHECK(LENGTH(SID)=4) PRIMARY KEY,
+  4  SNAME VARCHAR
+  5  (20) NOT NULL ,
+  6  DOB DATE ,
+  7  PHONE_NO NUMBER(10) CHECK(PHONE_NO>0) CHECK(LENGTH(PHONE_NO) = 10)
+  8* )
+SQL> /
+
+Table created.
+
+SQL> CREATE TABLE TRAINER
+  2  (
+  3  TID NUMBER(4) CHECK(TID>0) CHECK(LENGTH(TID)=4) PRIMARY KEY,
+  4  TNAME VARCHAR(20) NOT NULL ,
+  5  COURSE VARCHAR(50)
+  6  );
+
+Table created.
+
+SQL> SHOW TAB ;
+tab ON
+SQL> SHOW TABLES ;
+SP2-0158: unknown SHOW option "TABLES"
+SQL> SHOW USERS
+SP2-0158: unknown SHOW option "USERS"
+SQL> SELECT *
+  2  FROM TAB ;
+
+TNAME                          TABTYPE  CLUSTERID                                                                                                                                                       
+------------------------------ ------- ----------                                                                                                                                                       
+DEPT                           TABLE                                                                                                                                                                    
+EMP                            TABLE                                                                                                                                                                    
+BONUS                          TABLE                                                                                                                                                                    
+SALGRADE                       TABLE                                                                                                                                                                    
+STUDENT                        TABLE                                                                                                                                                                    
+TRAINER                        TABLE                                                                                                                                                                    
+
+6 rows selected.
+
+SQL>  RENAME TABLE STUDENT TO STUD;
+ RENAME TABLE STUDENT TO STUD
+        *
+ERROR at line 1:
+ORA-00903: invalid table name 
+
+
+SQL> RENAME STUDENT TO STUD ;
+
+Table renamed.
+
+SQL> SELECT *
+  2  FROM TAB ;
+
+TNAME                          TABTYPE  CLUSTERID                                                                                                                                                       
+------------------------------ ------- ----------                                                                                                                                                       
+DEPT                           TABLE                                                                                                                                                                    
+EMP                            TABLE                                                                                                                                                                    
+BONUS                          TABLE                                                                                                                                                                    
+SALGRADE                       TABLE                                                                                                                                                                    
+TRAINER                        TABLE                                                                                                                                                                    
+STUD                           TABLE                                                                                                                                                                    
+
+6 rows selected.
+
+SQL> DESC STUD
+ Name                                                                                                              Null?    Type
+ ----------------------------------------------------------------------------------------------------------------- -------- ----------------------------------------------------------------------------
+ SID                                                                                                               NOT NULL NUMBER(4)
+ SNAME                                                                                                             NOT NULL VARCHAR2(20)
+ DOB                                                                                                                        DATE
+ PHONE_NO                                                                                                                   NUMBER(10)
+
+SQL> ALTER TABLE STUD
+  2  ADD EMAIL VARCHAR(20) UNIQUE ;
+
+Table altered.
+
+SQL> DESC STUD
+ Name                                                                                                              Null?    Type
+ ----------------------------------------------------------------------------------------------------------------- -------- ----------------------------------------------------------------------------
+ SID                                                                                                               NOT NULL NUMBER(4)
+ SNAME                                                                                                             NOT NULL VARCHAR2(20)
+ DOB                                                                                                                        DATE
+ PHONE_NO                                                                                                                   NUMBER(10)
+ EMAIL                                                                                                                      VARCHAR2(20)
+
+SQL> ALTER TABLE STUD
+  2  RENAME COLUMN EMAIL TO MAIL_ID ;
+
+Table altered.
+
+SQL> DESC STUD
+ Name                                                                                                              Null?    Type
+ ----------------------------------------------------------------------------------------------------------------- -------- ----------------------------------------------------------------------------
+ SID                                                                                                               NOT NULL NUMBER(4)
+ SNAME                                                                                                             NOT NULL VARCHAR2(20)
+ DOB                                                                                                                        DATE
+ PHONE_NO                                                                                                                   NUMBER(10)
+ MAIL_ID                                                                                                                    VARCHAR2(20)
+
+SQL> ALTER TABLE STUD
+  2  DROP COLUMN MAIL_ID ;
+
+Table altered.
+
+SQL> DESC STUD
+ Name                                                                                                              Null?    Type
+ ----------------------------------------------------------------------------------------------------------------- -------- ----------------------------------------------------------------------------
+ SID                                                                                                               NOT NULL NUMBER(4)
+ SNAME                                                                                                             NOT NULL VARCHAR2(20)
+ DOB                                                                                                                        DATE
+ PHONE_NO                                                                                                                   NUMBER(10)
+
+SQL> -- MODIFY DATATYPE
+SQL> ALTER TABLE STUD
+  2  MODIFY SNAME VARCHAR(30) ;
+
+Table altered.
+
+SQL> DESC STUD
+ Name                                                                                                              Null?    Type
+ ----------------------------------------------------------------------------------------------------------------- -------- ----------------------------------------------------------------------------
+ SID                                                                                                               NOT NULL NUMBER(4)
+ SNAME                                                                                                             NOT NULL VARCHAR2(30)
+ DOB                                                                                                                        DATE
+ PHONE_NO                                                                                                                   NUMBER(10)
+
+SQL> -- MODIFY CONSTRAINTS
+SQL> ALTER TABLE STUD
+  2  MODIFY SNAME VARCHAR(30) NULL ;
+
+Table altered.
+
+SQL> DESC STUD ;
+ Name                                                                                                              Null?    Type
+ ----------------------------------------------------------------------------------------------------------------- -------- ----------------------------------------------------------------------------
+ SID                                                                                                               NOT NULL NUMBER(4)
+ SNAME                                                                                                                      VARCHAR2(30)
+ DOB                                                                                                                        DATE
+ PHONE_NO                                                                                                                   NUMBER(10)
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  ALTER TABLE STUD
+  2* ADD CONSTRAINT UK_PHONE_NO  UNIQUE(PHONE_NO)
+SQL> /
+
+Table altered.
+
+SQL> DESC STUD
+ Name                                                                                                              Null?    Type
+ ----------------------------------------------------------------------------------------------------------------- -------- ----------------------------------------------------------------------------
+ SID                                                                                                               NOT NULL NUMBER(4)
+ SNAME                                                                                                                      VARCHAR2(30)
+ DOB                                                                                                                        DATE
+ PHONE_NO                                                                                                                   NUMBER(10)
+
+SQL> SET PAGES 500 LINES 500
+SQL> SELECT
+  2  *
+  3  FROM USER_CONSTRAINTS ;
+
+OWNER                          CONSTRAINT_NAME                C TABLE_NAME                     SEARCH_CONDITION                                                                 R_OWNER                        R_CONSTRAINT_NAME              DELETE_RU STATUS   DEFERRABLE     DEFERRED  VALIDATED     GENERATED      BAD RELY LAST_CHAN INDEX_OWNER                    INDEX_NAME                     INVALID VIEW_RELATED                                                                                        
+------------------------------ ------------------------------ - ------------------------------ -------------------------------------------------------------------------------- ------------------------------ ------------------------------ --------- -------- -------------- --------- ------------- -------------- --- ---- --------- ------------------------------ ------------------------------ ------- --------------                                                                                      
+SCOTT                          SYS_C005431                    C STUD                           SID>0                                                                                                                                                    ENABLED  NOT DEFERRABLE IMMEDIATE VALIDATED     GENERATED NAME          11-JUL-26                                                                                                                                                                           
+SCOTT                          SYS_C005432                    C STUD                           LENGTH(SID)=4                                                                                                                                            ENABLED  NOT DEFERRABLE IMMEDIATE VALIDATED     GENERATED NAME          11-JUL-26                                                                                                                                                                           
+SCOTT                          SYS_C005433                    C STUD                           PHONE_NO>0                                                                                                                                               ENABLED  NOT DEFERRABLE IMMEDIATE VALIDATED     GENERATED NAME          11-JUL-26                                                                                                                                                                           
+SCOTT                          SYS_C005434                    C STUD                           LENGTH(PHONE_NO) = 10                                                                                                                                    ENABLED  NOT DEFERRABLE IMMEDIATE VALIDATED     GENERATED NAME          11-JUL-26                                                                                                                                                                           
+SCOTT                          SYS_C005436                    C TRAINER                        "TNAME" IS NOT NULL                                                                                                                                      ENABLED  NOT DEFERRABLE IMMEDIATE VALIDATED     GENERATED NAME          11-JUL-26                                                                                                                                                                           
+SCOTT                          SYS_C005437                    C TRAINER                        TID>0                                                                                                                                                    ENABLED  NOT DEFERRABLE IMMEDIATE VALIDATED     GENERATED NAME          11-JUL-26                                                                                                                                                                           
+SCOTT                          SYS_C005438                    C TRAINER                        LENGTH(TID)=4                                                                                                                                            ENABLED  NOT DEFERRABLE IMMEDIATE VALIDATED     GENERATED NAME          11-JUL-26                                                                                                                                                                           
+SCOTT                          FK_DEPTNO                      R EMP                                                                                                             SCOTT                          PK_DEPT                        NO ACTION ENABLED  NOT DEFERRABLE IMMEDIATE VALIDATED     USER NAME               30-AUG-05                                                                                                                                                                           
+SCOTT                          PK_DEPT                        P DEPT                                                                                                                                                                                    ENABLED  NOT DEFERRABLE IMMEDIATE VALIDATED     USER NAME               30-AUG-05 SCOTT                          PK_DEPT                                                                                                                                    
+SCOTT                          PK_EMP                         P EMP                                                                                                                                                                                     ENABLED  NOT DEFERRABLE IMMEDIATE VALIDATED     USER NAME               30-AUG-05 SCOTT                          PK_EMP                                                                                                                                     
+SCOTT                          SYS_C005435                    P STUD                                                                                                                                                                                    ENABLED  NOT DEFERRABLE IMMEDIATE VALIDATED     GENERATED NAME          11-JUL-26 SCOTT                          SYS_C005435                                                                                                                                
+SCOTT                          UK_PHONE_NO                    U STUD                                                                                                                                                                                    ENABLED  NOT DEFERRABLE IMMEDIATE VALIDATED     USER NAME               11-JUL-26 SCOTT                          UK_PHONE_NO                                                                                                                                
+SCOTT                          SYS_C005439                    P TRAINER                                                                                                                                                                                 ENABLED  NOT DEFERRABLE IMMEDIATE VALIDATED     GENERATED NAME          11-JUL-26 SCOTT                          SYS_C005439                                                                                                                                
+
+13 rows selected.
+
+SQL> ALTER TABLE STUD
+  2  DROP CONSTRAINT UK_PHONE_NO ;
+
+Table altered.
+
+SQL> SELECT *
+  2  FROM USER_CONSTRAINTS ;
+
+OWNER                          CONSTRAINT_NAME                C TABLE_NAME                     SEARCH_CONDITION                                                                 R_OWNER                        R_CONSTRAINT_NAME              DELETE_RU STATUS   DEFERRABLE     DEFERRED  VALIDATED     GENERATED      BAD RELY LAST_CHAN INDEX_OWNER                    INDEX_NAME                     INVALID VIEW_RELATED                                                                                        
+------------------------------ ------------------------------ - ------------------------------ -------------------------------------------------------------------------------- ------------------------------ ------------------------------ --------- -------- -------------- --------- ------------- -------------- --- ---- --------- ------------------------------ ------------------------------ ------- --------------                                                                                      
+SCOTT                          SYS_C005431                    C STUD                           SID>0                                                                                                                                                    ENABLED  NOT DEFERRABLE IMMEDIATE VALIDATED     GENERATED NAME          11-JUL-26                                                                                                                                                                           
+SCOTT                          SYS_C005432                    C STUD                           LENGTH(SID)=4                                                                                                                                            ENABLED  NOT DEFERRABLE IMMEDIATE VALIDATED     GENERATED NAME          11-JUL-26                                                                                                                                                                           
+SCOTT                          SYS_C005433                    C STUD                           PHONE_NO>0                                                                                                                                               ENABLED  NOT DEFERRABLE IMMEDIATE VALIDATED     GENERATED NAME          11-JUL-26                                                                                                                                                                           
+SCOTT                          SYS_C005434                    C STUD                           LENGTH(PHONE_NO) = 10                                                                                                                                    ENABLED  NOT DEFERRABLE IMMEDIATE VALIDATED     GENERATED NAME          11-JUL-26                                                                                                                                                                           
+SCOTT                          SYS_C005436                    C TRAINER                        "TNAME" IS NOT NULL                                                                                                                                      ENABLED  NOT DEFERRABLE IMMEDIATE VALIDATED     GENERATED NAME          11-JUL-26                                                                                                                                                                           
+SCOTT                          SYS_C005437                    C TRAINER                        TID>0                                                                                                                                                    ENABLED  NOT DEFERRABLE IMMEDIATE VALIDATED     GENERATED NAME          11-JUL-26                                                                                                                                                                           
+SCOTT                          SYS_C005438                    C TRAINER                        LENGTH(TID)=4                                                                                                                                            ENABLED  NOT DEFERRABLE IMMEDIATE VALIDATED     GENERATED NAME          11-JUL-26                                                                                                                                                                           
+SCOTT                          FK_DEPTNO                      R EMP                                                                                                             SCOTT                          PK_DEPT                        NO ACTION ENABLED  NOT DEFERRABLE IMMEDIATE VALIDATED     USER NAME               30-AUG-05                                                                                                                                                                           
+SCOTT                          PK_DEPT                        P DEPT                                                                                                                                                                                    ENABLED  NOT DEFERRABLE IMMEDIATE VALIDATED     USER NAME               30-AUG-05 SCOTT                          PK_DEPT                                                                                                                                    
+SCOTT                          PK_EMP                         P EMP                                                                                                                                                                                     ENABLED  NOT DEFERRABLE IMMEDIATE VALIDATED     USER NAME               30-AUG-05 SCOTT                          PK_EMP                                                                                                                                     
+SCOTT                          SYS_C005435                    P STUD                                                                                                                                                                                    ENABLED  NOT DEFERRABLE IMMEDIATE VALIDATED     GENERATED NAME          11-JUL-26 SCOTT                          SYS_C005435                                                                                                                                
+SCOTT                          SYS_C005439                    P TRAINER                                                                                                                                                                                 ENABLED  NOT DEFERRABLE IMMEDIATE VALIDATED     GENERATED NAME          11-JUL-26 SCOTT                          SYS_C005439                                                                                                                                
+
+12 rows selected.
+
+SQL> SPOOL OFF
+SQL> ALTER TABLE TRAINER
+  2  ADD SID NUMBER(4) ;
+
+Table altered.
+
+SQL> DESC TRAINER
+ Name                                                                                                                                                                                                                                                                                                  Null?    Type
+ ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- -------- ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ TID                                                                                                                                                                                                                                                                                                   NOT NULL NUMBER(4)
+ TNAME                                                                                                                                                                                                                                                                                                 NOT NULL VARCHAR2(20)
+ COURSE                                                                                                                                                                                                                                                                                                         VARCHAR2(50)
+ SID                                                                                                                                                                                                                                                                                                            NUMBER(4)
+
+SQL> ALTER TABLE TRAINER
+  2  ADD CONSTRAINT FK_SID FOREIGN KEY(SID)
+  3  REFERENCES STUD(SID) ;
+
+Table altered.
+
+SQL> SHOW DESC;
+describe DEPTH 1 LINENUM OFF INDENT ON
+SQL> DESC TRAINER ;
+ Name                                                                                                                                                                                                                                                                                                  Null?    Type
+ ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- -------- ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ TID                                                                                                                                                                                                                                                                                                   NOT NULL NUMBER(4)
+ TNAME                                                                                                                                                                                                                                                                                                 NOT NULL VARCHAR2(20)
+ COURSE                                                                                                                                                                                                                                                                                                         VARCHAR2(50)
+ SID                                                                                                                                                                                                                                                                                                            NUMBER(4)
+
+SQL> CREATE TABLE PHONE
+  2  (
+  3  PID NUMBER(4) PRIMARY KEY,
+  4  SID NUMBER(4) ,
+  5  CONSTRAINT FK_SID FOREIGN KEY(SID) REFERENCES STUD(SID)
+  6  );
+CONSTRAINT FK_SID FOREIGN KEY(SID) REFERENCES STUD(SID)
+           *
+ERROR at line 5:
+ORA-02264: name already used by an existing constraint 
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  CREATE TABLE PHONE
+  2  (
+  3  PID NUMBER(4) PRIMARY KEY,
+  4  SID NUMBER(4) ,
+  5  CONSTRAINT FK_SID_PHONE FOREIGN KEY(SID) REFERENCES STUD(SID)
+  6* )
+SQL> /
+
+Table created.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  CREATE TABLE PHONE
+  2  (
+  3  PID NUMBER(4) PRIMARY KEY,
+  4  SID NUMBER(4) ,
+  5  CONSTRAINT FK_SID_PHONE FOREIGN KEY(SID) REFERENCES STUD(SID)
+  6* )
+SQL> /
+CREATE TABLE PHONE
+             *
+ERROR at line 1:
+ORA-00955: name is already used by an existing object 
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  CREATE TABLE PHONE
+  2  (
+  3  PID NUMBER(4) PRIMARY KEY,
+  4  SID NUMBER(4) ,
+  5  CONSTRAINT FK_SID_PHONE FOREIGN KEY(SID) REFERENCES STUD(SID)
+  6* )
+SQL> DESC PHONE
+ Name                                                                                                                                                                                                                                                                                                  Null?    Type
+ ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- -------- ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ PID                                                                                                                                                                                                                                                                                                   NOT NULL NUMBER(4)
+ SID                                                                                                                                                                                                                                                                                                            NUMBER(4)
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  CREATE TABLE LAPTOP
+  2  (
+  3  PID NUMBER(4) PRIMARY KEY,
+  4  SID NUMBER(4) ,
+  5  FOREIGN KEY(SID) REFERENCES STUD(SID)
+  6* )
+SQL> /
+
+Table created.
+
+SQL> DESC LAPTOP
+ Name                                                                                                                                                                                                                                                                                                  Null?    Type
+ ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- -------- ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ PID                                                                                                                                                                                                                                                                                                   NOT NULL NUMBER(4)
+ SID                                                                                                                                                                                                                                                                                                            NUMBER(4)
+
+SQL> SELECT *
+  2  FROM TAB ;
+
+TNAME                          TABTYPE  CLUSTERID                                                                                                                                                                                                                                                                                                                                                                                                                                                                   
+------------------------------ ------- ----------                                                                                                                                                                                                                                                                                                                                                                                                                                                                   
+DEPT                           TABLE                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
+EMP                            TABLE                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
+BONUS                          TABLE                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
+SALGRADE                       TABLE                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
+PHONE                          TABLE                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
+TRAINER                        TABLE                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
+STUD                           TABLE                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
+LAPTOP                         TABLE                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
+
+8 rows selected.
+
+SQL> -- DROP --
+SQL> DROP TABLE LAPTOP PURGE ;
+
+Table dropped.
+
+SQL> SELECT *
+  2  FROM TAB ;
+
+TNAME                          TABTYPE  CLUSTERID                                                                                                                                                                                                                                                                                                                                                                                                                                                                   
+------------------------------ ------- ----------                                                                                                                                                                                                                                                                                                                                                                                                                                                                   
+DEPT                           TABLE                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
+EMP                            TABLE                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
+BONUS                          TABLE                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
+SALGRADE                       TABLE                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
+PHONE                          TABLE                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
+TRAINER                        TABLE                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
+STUD                           TABLE                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
+
+7 rows selected.
+
+SQL> DROP TABLE PHONE;
+
+Table dropped.
+
+SQL> SELECT *
+  2  FROM TAB ;
+
+TNAME                          TABTYPE  CLUSTERID                                                                                                                                                                                                                                                                                                                                                                                                                                                                   
+------------------------------ ------- ----------                                                                                                                                                                                                                                                                                                                                                                                                                                                                   
+DEPT                           TABLE                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
+EMP                            TABLE                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
+BONUS                          TABLE                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
+SALGRADE                       TABLE                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
+TRAINER                        TABLE                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
+STUD                           TABLE                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
+BIN$jYokLKsvS6y6oiVOpqDZIg==$0 TABLE                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
+
+7 rows selected.
+
+SQL> PURGE TABLE "BIN$jYokLKsvS6y6oiVOpqDZIg==$0"
+  2  ;
+
+Table purged.
+
+SQL> SELECT
+  2  *
+  3  FROM TAB ;
+
+TNAME                          TABTYPE  CLUSTERID                                                                                                                                                                                                                                                                                                                                                                                                                                                                   
+------------------------------ ------- ----------                                                                                                                                                                                                                                                                                                                                                                                                                                                                   
+DEPT                           TABLE                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
+EMP                            TABLE                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
+BONUS                          TABLE                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
+SALGRADE                       TABLE                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
+TRAINER                        TABLE                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
+STUD                           TABLE                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
+
+6 rows selected.
+
+SQL> SPOOL OFF
+SQL> -- DML--
+SQL> -- 1. INSERT
+SQL> INSERT INTO TABLE STUD VALUES(1001, 'NIBDA' , '14-FEB-04' , 1234567892 );
+INSERT INTO TABLE STUD VALUES(1001, 'NIBDA' , '14-FEB-04' , 1234567892 )
+            *
+ERROR at line 1:
+ORA-00903: invalid table name 
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* INSERT INTO  STUD VALUES(1001, 'NIBDA' , '14-FEB-04' , 1234567892 )
+SQL> /
+
+1 row created.
+
+SQL> SELECT *
+  2  FROM STUD ;
+
+       SID SNAME                          DOB         PHONE_NO                                                                                                                                                                                                                                                                                                                                                                                                                                                      
+---------- ------------------------------ --------- ----------                                                                                                                                                                                                                                                                                                                                                                                                                                                      
+      1001 NIBDA                          14-FEB-04 1234567892                                                                                                                                                                                                                                                                                                                                                                                                                                                      
+
+SQL> INSERT INTO STUD(SID,SNAME) VALUES(1000 , 'NIMBUDA');
+
+1 row created.
+
+SQL> SELECT *
+  2  FROM STUD ;
+
+       SID SNAME                          DOB         PHONE_NO                                                                                                                                                                                                                                                                                                                                                                                                                                                      
+---------- ------------------------------ --------- ----------                                                                                                                                                                                                                                                                                                                                                                                                                                                      
+      1001 NIBDA                          14-FEB-04 1234567892                                                                                                                                                                                                                                                                                                                                                                                                                                                      
+      1000 NIMBUDA                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
+
+SQL> -- UPDATE--
+SQL> -- WAQT UPDATE STUDENT NAME OF ID 1001 .
+SQL> UPDATE STUD
+  2  SET SNAME='NIBDI'
+  3  WHERE SID=1001 ;
+
+1 row updated.
+
+SQL> SELECT *
+  2  FROM STUD ;
+
+       SID SNAME                          DOB         PHONE_NO                                                                                                                                                                                                                                                                                                                                                                                                                                                      
+---------- ------------------------------ --------- ----------                                                                                                                                                                                                                                                                                                                                                                                                                                                      
+      1001 NIBDI                          14-FEB-04 1234567892                                                                                                                                                                                                                                                                                                                                                                                                                                                      
+      1000 NIMBUDA                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
+
+SQL> -- DELETE
+SQL> DELETE FROM STUD
+  2  WHERE SID=1001;
+
+1 row deleted.
+
+SQL> SELECT *
+  2  FROM STUD ;
+
+       SID SNAME                          DOB         PHONE_NO                                                                                                                                                                                                                                                                                                                                                                                                                                                      
+---------- ------------------------------ --------- ----------                                                                                                                                                                                                                                                                                                                                                                                                                                                      
+      1000 NIMBUDA                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
+
+SQL> --- TCL ---
+SQL> spool off
+SQL> -- DCL --
+SQL> -- GRANT--
+SQL> SHOW USER ;
+USER is "SCOTT"
+SQL> GRANT SELECT
+  2  ON STUD
+  3  TO HR ;
+
+Grant succeeded.
+
+SQL> CONN HR/SUNNY
+Connected.
+SQL> SHOW USER
+USER is "HR"
+SQL> SELECT *
+  2  FROM STUD ;
+FROM STUD 
+     *
+ERROR at line 2:
+ORA-00942: table or view does not exist 
+
+
+SQL> SELECT *
+  2  FROM SCOTT.STUD;
+
+       SID SNAME                          DOB         PHONE_NO                                                                                                                                                                                                                                                                                                                                                                                                                                                      
+---------- ------------------------------ --------- ----------                                                                                                                                                                                                                                                                                                                                                                                                                                                      
+      1000 NIMBUDA                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
+
+SQL> CONN SCOTT
+Connected.
+SQL> REVOKE SELECT
+  2  ON STUD
+  3  FROM HR ;
+
+Revoke succeeded.
+
+SQL> CONN HR/SUNNY
+Connected.
+SQL> SELECT *
+  2  FROM SCOTT.STUD ;
+FROM SCOTT.STUD 
+           *
+ERROR at line 2:
+ORA-00942: table or view does not exist 
+
+
+SQL> CONN SCOTT/SUNNY
+Connected.
+SQL> SELECT *
+  2  FROM STUD ;
+
+       SID SNAME                          DOB         PHONE_NO                                                                                                                                                                                                                                                                                                                                                                                                                                                      
+---------- ------------------------------ --------- ----------                                                                                                                                                                                                                                                                                                                                                                                                                                                      
+      1000 NIMBUDA                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
+
+SQL> SPOOL OFF
